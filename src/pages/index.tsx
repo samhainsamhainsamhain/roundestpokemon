@@ -7,8 +7,8 @@ const Home: NextPage = () => {
 
   const firstPokemon = trpc.useQuery(['get-pokemon-by-id', { id: first }]);
   const secondPokemon = trpc.useQuery(['get-pokemon-by-id', { id: second }]);
-  console.log(firstPokemon.data?.name);
-  console.log(secondPokemon.data?.name);
+  console.log(firstPokemon);
+  console.log(secondPokemon);
 
   if (firstPokemon.isLoading || secondPokemon.isLoading) return null;
 
