@@ -15,12 +15,12 @@ export const getOptionsForVote = () => {
   const firstId = getRandomPokemon();
   const secondId = getRandomPokemon(firstId);
   //use state to avoid mismatch of data on server and client
-  const [ids, setIds] = useState([0, 0]);
+//   const [ids, setIds] = useState([0, 0]);
 
-  useEffect(() => {
-    setIds([firstId, secondId]);
-  }, []);
+//   useEffect(() => {
+//     setIds([firstId, secondId]);
+//   }, []);
 
-  return ids;
-//  return [firstId, secondId]
+//   return ids;
+ return [firstId, secondId]
 };

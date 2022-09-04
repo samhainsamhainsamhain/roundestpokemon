@@ -3,19 +3,21 @@ import { withTRPC } from '@trpc/next';
 import type { AppType } from 'next/dist/shared/lib/utils';
 import type { AppRouter } from '@/backend/router';
 
+function getBaseUrl() {
+  if (process.browser) return ''; // Browser should use current path
+  if (process.env.VERCEL_URL)
+    return `https://${process.env.VERCEL_URL}/api/trpc`; // SSR should use vercel url
+
+  return `https://localhost:${process.env.PORT ?? 3000}`; // dev SSR should use localhost
+}
+
 const MyApp: AppType = ({ Component, pageProps }) => {
   return <Component {...pageProps} />;
 };
 
 export default withTRPC<AppRouter>({
-  config({ ctx }) {
-    /**
-     * If you want to use SSR, you need to use the server's full URL
-     * @link https://trpc.io/docs/ssr
-     */
-    const url = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}/api/trpc`
-      : 'http://localhost:3000/api/trpc';
+  config() {
+    const url = `${getBaseUrl()}/api/trpc`;
     return {
       url,
       /**
@@ -27,5 +29,5 @@ export default withTRPC<AppRouter>({
   /**
    * @link https://trpc.io/docs/ssr
    */
-  ssr: true,
+  ssr: false,
 })(MyApp);
