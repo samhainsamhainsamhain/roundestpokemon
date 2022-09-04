@@ -22,4 +22,5 @@ export const getOptionsForVote = () => {
   }, []);
 
   return ids;
+//  return [firstId, secondId]
 };
