@@ -4,6 +4,8 @@ import { getOptionsForVote } from '@/utils/getRandomPokemon';
 import React, { useState } from 'react';
 import { inferQueryResponse } from './api/trpc/[trpc]';
 
+import Image from 'next/image';
+
 const btn =
   'inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm font-medium rounded-full text-gray-700 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500';
 
@@ -65,9 +67,11 @@ const PokemonListing: React.FC<{
 }> = (props) => {
   return (
     <div className="flex flex-col items-center">
-      <img
-        src={props.pokemon.sprites.front_default || ''}
-        className="w-64 h-64 "
+      <Image
+        src={props.pokemon.sprites.front_default}
+        width={256}
+        height={256}
+        layout={'fixed'}
       />
       <div className="text-xl text-center capitalize mt-[-2rem]">
         {props.pokemon.name}
