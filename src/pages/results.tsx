@@ -9,6 +9,7 @@ const getPokemonInOrder = async () => {
   return await prisma.pokemon.findMany({
     orderBy: {
       VoteFor: { _count: 'desc' },
+      VoteAgainst: { _count: 'asc' },
     },
     select: {
       id: true,
@@ -48,7 +49,14 @@ const PokemonListing: React.FC<{
         />
         <div className="capitalize pr-2">{pokemon.name}</div>
       </div>
-      <div className="pr-4">{generateCountPercent(pokemon) + '%'}</div>
+      <div className="pr-4">
+        {generateCountPercent(pokemon).toPrecision(3) +
+          '%' +
+          ' | ' +
+          pokemon._count.VoteFor +
+          ' / ' +
+          pokemon._count.VoteAgainst}
+      </div>
     </div>
   );
 };
