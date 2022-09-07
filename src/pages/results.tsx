@@ -3,6 +3,7 @@ import { prisma } from '@/backend/utils/prisma';
 import { AsyncReturnType } from '@/utils/ts-bs';
 
 import Image from 'next/image';
+import Link from 'next/link';
 
 const getPokemonInOrder = async () => {
   return await prisma.pokemon.findMany({
@@ -56,14 +57,25 @@ const ResultsPage: React.FC<{
   pokemon: PokemonQueryResult;
 }> = (props) => {
   return (
-    <div className="flex flex-col items-center">
-      <h2 className="text-2xl p-4">Results</h2>
-      <div className="flex flex-col w-full max-w-2xl border">
-        {props.pokemon.map((currentPokemon, index) => {
-          return <PokemonListing pokemon={currentPokemon} key={index} />;
-        })}
+    <>
+      <div className="flex flex-col items-center">
+        <h2 className="text-2xl p-4">Results</h2>
+        <div className="flex flex-col w-full max-w-2xl border">
+          {props.pokemon.map((currentPokemon, index) => {
+            return <PokemonListing pokemon={currentPokemon} key={index} />;
+          })}
+        </div>
       </div>
-    </div>
+      <div className="w-full text-xl text-center pb-4 pt-2">
+        <a href="https://github.com/samhainsamhainsamhain/roundestpokemon">
+          Github
+        </a>
+        {' | '}
+        <Link href={'/'}>
+          <a>Vote</a>
+        </Link>
+      </div>
+    </>
   );
 };
 
