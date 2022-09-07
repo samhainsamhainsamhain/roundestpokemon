@@ -29,32 +29,33 @@ const Home: NextPage = () => {
     updateIds(() => getOptionsForVote());
   };
 
+  const dataLoaded =
+    !firstPokemon.isLoading &&
+    firstPokemon.data &&
+    !secondPokemon.isLoading &&
+    secondPokemon.data;
+
   return (
-    <>
-      <div className="h-screen w-screen flex flex-col justify-center items-center">
-        <div className="text-2xl text-center">Which Pokemon is rounder?</div>
-        <div className="p-2" />
+    <div className="h-screen w-screen flex flex-col justify-between items-center">
+      <div className="text-2xl text-center pt-8">Which Pokemon is rounder?</div>
+      {dataLoaded && (
         <div className="border rounded p-8 flex justify-between max-w-2xl items-center">
-          {!firstPokemon.isLoading &&
-            firstPokemon.data &&
-            !secondPokemon.isLoading &&
-            secondPokemon.data && (
-              <>
-                <PokemonListing
-                  pokemon={firstPokemon.data}
-                  vote={() => voteForRoundest(first)}
-                />
-                <div className="p-8">vs</div>
-                <PokemonListing
-                  pokemon={secondPokemon.data}
-                  vote={() => voteForRoundest(second)}
-                />
-              </>
-            )}
+          <PokemonListing
+            pokemon={firstPokemon.data}
+            vote={() => voteForRoundest(first)}
+          />
+          <div className="p-8">vs</div>
+          <PokemonListing
+            pokemon={secondPokemon.data}
+            vote={() => voteForRoundest(second)}
+          />
+          <div className="p-2" />
         </div>
-        <div className="p-2" />
-      </div>
-      <div className="absolute bottom-0 w-full text-xl text-center pb-2">
+      )}
+      {!dataLoaded && (
+        <img className="max-w-64 max-h-64" src={'/circles.svg'} />
+      )}
+      <div className="w-full text-xl text-center pb-2">
         <a href="https://github.com/samhainsamhainsamhain/roundestpokemon">
           Github
         </a>
@@ -63,7 +64,7 @@ const Home: NextPage = () => {
           <a>Results</a>
         </Link>
       </div>
-    </>
+    </div>
   );
 };
 
